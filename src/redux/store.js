@@ -20,6 +20,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         contacts: state.contacts.filter(({ id }) => id !== action.payload),
       };
+    case 'contacts/filter':
+      return { ...state, filter: action.payload };
     default:
       return state;
   }

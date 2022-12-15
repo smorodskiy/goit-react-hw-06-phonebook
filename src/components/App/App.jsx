@@ -9,7 +9,7 @@ import { Container } from './App.styled';
 
 // Generator ids
 import { nanoid } from 'nanoid';
-import { addContact, deleteContact } from 'redux/actions';
+import { addContact, deleteContact, filtersContact } from 'redux/actions';
 
 export const App = () => {
   // Global states
@@ -76,13 +76,13 @@ export const App = () => {
     //   prevContacts.filter(({ id }) => id !== idToDel)
     // );
     dispatch(deleteContact(id));
-    console.log(contacts);
   };
 
   // On input filter
   const handleInputFilter = e => {
-    const newFilter = e.target.value;
+    const inputValue = e.target.value;
     // setFilter(newFilter);
+    dispatch(filtersContact(inputValue));
   };
 
   // Filtering contacts by name
