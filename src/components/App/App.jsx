@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -9,32 +9,26 @@ import { Container } from './App.styled';
 
 // Generator ids
 import { nanoid } from 'nanoid';
+import { addContact } from 'redux/actions';
 
 export const App = () => {
-  
   // Global states
   const contacts = useSelector(state => state.contacts);
   // const [contacts, setContacts] = useState([]);
   const filter = useSelector(state => state.filter);
   // const [filter, setFilter] = useState('');
 
+  const dispatch = useDispatch();
 
   // On mount
   useEffect(() => {
     try {
-      const contacts = localStorage.getItem('contacts');
-      const contactsParsed = JSON.parse(contacts);
-
-      if (contactsParsed !== null && contactsParsed.length > 0) {
-        // setContacts(contactsParsed);
-      } else {
-        // setContacts([
-        //   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-        //   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-        //   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-        //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-        // ]);
-      }
+      // const contacts = localStorage.getItem('contacts');
+      // const contactsParsed = JSON.parse(contacts);
+      // if (contactsParsed !== null && contactsParsed.length > 0) {
+      // console.log(contactsParsed);
+      // setContacts(contactsParsed);
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -71,8 +65,9 @@ export const App = () => {
       number: currentNumber,
     };
 
-    // Change state
+    // Change contacts state
     // setContacts(prevState => [...prevState, currentUser]);
+    dispatch(addContact(currentUser))
   };
 
   // Delete contact
@@ -80,6 +75,7 @@ export const App = () => {
     // setContacts(prevContacts =>
     //   prevContacts.filter(({ id }) => id !== idToDel)
     // );
+    
   };
 
   // On input filter
