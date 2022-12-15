@@ -9,7 +9,7 @@ import { Container } from './App.styled';
 
 // Generator ids
 import { nanoid } from 'nanoid';
-import { addContact } from 'redux/actions';
+import { addContact, deleteContact } from 'redux/actions';
 
 export const App = () => {
   // Global states
@@ -37,7 +37,7 @@ export const App = () => {
   // On update "contacts" state
   useEffect(() => {
     try {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
+      // localStorage.setItem('contacts', JSON.stringify(contacts));
     } catch (error) {
       console.log(error);
     }
@@ -67,15 +67,16 @@ export const App = () => {
 
     // Change contacts state
     // setContacts(prevState => [...prevState, currentUser]);
-    dispatch(addContact(currentUser))
+    dispatch(addContact(currentUser));
   };
 
   // Delete contact
-  const handleDeleteContact = idToDel => {
+  const handleDeleteContact = id => {
     // setContacts(prevContacts =>
     //   prevContacts.filter(({ id }) => id !== idToDel)
     // );
-    
+    dispatch(deleteContact(id));
+    console.log(contacts);
   };
 
   // On input filter
