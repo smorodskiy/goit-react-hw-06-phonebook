@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { devToolsEnhancer } from "@redux-devtools/extension";
+import { devToolsEnhancer } from '@redux-devtools/extension';
 
 const initialState = {
   contacts: [
@@ -12,7 +12,12 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case 'contacts/add': 
+    return {...state, contacts: [...state.contacts, action.payload]}
+    default:
+      return state;
+  }
 };
 
 // Створюємо розширення стора, щоб додати інструменти розробника
