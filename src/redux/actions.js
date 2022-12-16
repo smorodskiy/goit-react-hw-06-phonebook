@@ -1,3 +1,10 @@
+export const loadFromStore = contacts => {
+    return {
+      type: 'contacts/loadFromStore',
+      payload: contacts,
+    };
+  };  
+
 export const addContact = contact => {
   return {
     type: 'contacts/add',

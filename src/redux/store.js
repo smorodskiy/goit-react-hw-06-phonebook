@@ -13,6 +13,8 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'contacts/loadFromStore':
+      return { ...state, contacts: action.payload };
     case 'contacts/add':
       return { ...state, contacts: [...state.contacts, action.payload] };
     case 'contacts/delete':

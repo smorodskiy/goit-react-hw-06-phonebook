@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+// Notify
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+// Components
 import { Section, Phonebook, Contacts, Filter } from 'components';
 
+// Styles
 import { Container } from './App.styled';
 
 // Generator ids
 import { nanoid } from 'nanoid';
-import { addContact, deleteContact, filtersContact } from 'redux/actions';
+
+// Redux actions
+import {
+  addContact,
+  deleteContact,
+  filtersContact,
+  loadFromStore,
+} from 'redux/actions';
+
+// Redux selectors
+import { getContacts, getFilter } from 'redux/selectors';
 
 export const App = () => {
   // Global states
-  const contacts = useSelector(state => state.contacts);
-  // const [contacts, setContacts] = useState([]);
-  const filter = useSelector(state => state.filter);
-  // const [filter, setFilter] = useState('');
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
+  // Dispatcher
   const dispatch = useDispatch();
 
   // On mount
   useEffect(() => {
     try {
-      // const contacts = localStorage.getItem('contacts');
-      // const contactsParsed = JSON.parse(contacts);
-      // if (contactsParsed !== null && contactsParsed.length > 0) {
-      // console.log(contactsParsed);
-      // setContacts(contactsParsed);
-      // }
+      const contacts = localStorage.getItem('contacts');
+      const contactsParsed = JSON.parse(contacts);
+      if (contactsParsed !== null && contactsParsed.length > 0) {
+        dispatch(loadFromStore(contactsParsed));
+        console.log(contacts);
+        // setContacts(contactsParsed);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +50,7 @@ export const App = () => {
   // On update "contacts" state
   useEffect(() => {
     try {
-      // localStorage.setItem('contacts', JSON.stringify(contacts));
+      localStorage.setItem('contacts', JSON.stringify(contacts));
     } catch (error) {
       console.log(error);
     }
@@ -49,39 +62,32 @@ export const App = () => {
     const currentName = name;
     const currentNumber = number;
 
-    // Check on exist contact
     const isExist = contacts.some(user => {
       return user.name === currentName;
     });
+
     if (isExist) {
       Notify.warning(`${currentName} is already exists`);
       return;
     }
 
-    // Create obj of new user
     const currentUser = {
       id: nanoid(),
       name: currentName,
       number: currentNumber,
     };
 
-    // Change contacts state
-    // setContacts(prevState => [...prevState, currentUser]);
     dispatch(addContact(currentUser));
   };
 
   // Delete contact
   const handleDeleteContact = id => {
-    // setContacts(prevContacts =>
-    //   prevContacts.filter(({ id }) => id !== idToDel)
-    // );
     dispatch(deleteContact(id));
   };
 
   // On input filter
   const handleInputFilter = e => {
     const inputValue = e.target.value;
-    // setFilter(newFilter);
     dispatch(filtersContact(inputValue));
   };
 
