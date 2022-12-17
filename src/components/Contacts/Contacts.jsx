@@ -1,23 +1,23 @@
 import React from 'react';
 
 import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Check types of props
 // import PropTypes from 'prop-types';
+
 import {
   DeleteButton,
   Contact,
   ContactInfo,
   ContactList,
 } from './Contacts.styled';
-import { deleteContact } from 'redux/contactsSlice';
 
 export const Contacts = () => {
   const dispatch = useDispatch();
-
   const { contacts } = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const { filter } = useSelector(getFilter);
 
   // Delete contact
   const handleDeleteContact = id => {
