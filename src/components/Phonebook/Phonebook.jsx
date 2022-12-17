@@ -1,14 +1,51 @@
 import React from 'react';
 
 // Check types of props
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { AddButton } from './Phonebook.styled';
 import { Field } from 'components/base/Field/Field.styled';
 import { useState } from 'react';
 
-export const Phonebook = ({ onSubmit }) => {
+// Generator ids
+import { nanoid } from 'nanoid';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
+
+// Notify
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+export const Phonebook = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+  const { contacts } = useSelector(getContacts);
+
+  // Add contacts
+  const handleAddContact = (e, name, number) => {
+    e.preventDefault();
+    const currentName = name;
+    const currentNumber = number;
+
+    const isExist = contacts.some(user => {
+      return user.name === currentName;
+    });
+
+    if (isExist) {
+      Notify.warning(`${currentName} is already exists`);
+      return;
+    }
+
+    const currentUser = {
+      id: nanoid(),
+      name: currentName,
+      number: currentNumber,
+    };
+
+    dispatch(addContact(currentUser));
+  };
 
   // On input name
   const handleInputName = e => {
@@ -23,7 +60,7 @@ export const Phonebook = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={e => onSubmit(e, name, number)}>
+    <form onSubmit={e => handleAddContact(e, name, number)}>
       <div>
         <p>Name</p>
         <Field
@@ -49,9 +86,4 @@ export const Phonebook = ({ onSubmit }) => {
       <AddButton type="submit">Add contact</AddButton>
     </form>
   );
-};
-
-// Types
-Phonebook.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
