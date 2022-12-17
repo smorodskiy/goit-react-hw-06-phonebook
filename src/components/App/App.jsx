@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 // Components
 import { Section, Phonebook, Contacts, Filter } from 'components';
 
@@ -8,22 +7,14 @@ import { Section, Phonebook, Contacts, Filter } from 'components';
 import { Container } from './App.styled';
 
 export const App = () => {
- 
-
-  // On input filter
-  const handleInputFilter = e => {
-    const inputValue = e.target.value;
-    // dispatch(filtersContact(inputValue));
-  };
-
   return (
     <Container>
       <Section title="Phonebook">
-        <Phonebook/>
+        <Phonebook />
       </Section>
 
       <Section title="Contacts">
-        <Filter onInputFilter={handleInputFilter} />
+        <Filter />
       </Section>
 
       <Contacts />
