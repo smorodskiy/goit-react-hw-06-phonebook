@@ -1,19 +1,24 @@
 import React from 'react';
 
-// Check types of props
-import PropTypes from 'prop-types';
+// Styles
 import { Field } from 'components/base/Field/Field.styled';
 
-export const Filter = ({ onInputFilter }) => {
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filterSlice';
+
+export const Filter = () => {
+  const dispatch = useDispatch();
+
+  // On input filter
+  const handleInputFilter = e => {
+    const inputValue = e.target.value;
+    dispatch(setFilter(inputValue));
+  };
+
   return (
     <>
       <p>Find contacts by name</p>
-      <Field type="text" onChange={onInputFilter} />
+      <Field type="text" onChange={handleInputFilter} />
     </>
   );
-};
-
-// Types
-Filter.propTypes = {
-  onInputFilter: PropTypes.func.isRequired,
 };
