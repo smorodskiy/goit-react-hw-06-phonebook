@@ -1,10 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 
 // Check types of props
 // import PropTypes from 'prop-types';
+
+// Styles
 import { AddButton } from './Phonebook.styled';
 import { Field } from 'components/base/Field/Field.styled';
-import { useState } from 'react';
 
 // Generator ids
 import { nanoid } from 'nanoid';
@@ -22,7 +24,7 @@ export const Phonebook = () => {
 
   const dispatch = useDispatch();
   const { contacts } = useSelector(getContacts);
-
+  console.log(contacts);
   // Add contacts
   const handleAddContact = (e, name, number) => {
     e.preventDefault();
