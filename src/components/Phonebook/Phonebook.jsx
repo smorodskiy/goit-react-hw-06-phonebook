@@ -23,8 +23,8 @@ export const Phonebook = () => {
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const { contacts } = useSelector(getContacts);
-  console.log(contacts);
+  const contacts = useSelector(getContacts);
+
   // Add contacts
   const handleAddContact = (e, name, number) => {
     e.preventDefault();

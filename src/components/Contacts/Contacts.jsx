@@ -16,8 +16,8 @@ import {
 
 export const Contacts = () => {
   const dispatch = useDispatch();
-  const { contacts } = useSelector(getContacts);
-  const { filter } = useSelector(getFilter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   // Delete contact
   const handleDeleteContact = id => {

@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const contactsInitialState = {
-  contacts: [],
-};
+const contactsInitialState = [];
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -10,19 +8,19 @@ const contactsSlice = createSlice({
   reducers: {
     addContact: {
       reducer(state, action) {
-        state.contacts.push(action.payload);
+        state.push(action.payload);
       },
-      prepare(user) {
+      prepare(userObj) {
         return {
-          payload: user,
+          payload: userObj,
         };
       },
     },
     deleteContact(state, action) {
-      const index = state.contacts.findIndex(
+      const index = state.findIndex(
         contact => contact.id === action.payload
       );
-      state.contacts.splice(index, 1);
+      state.splice(index, 1);
     },
   },
 });
