@@ -5,7 +5,7 @@ import { useState } from 'react';
 // import PropTypes from 'prop-types';
 
 // Styles
-import { AddButton } from './Phonebook.styled';
+import { AddButton } from './ContactForm.styled';
 import { Field } from 'components/base/Field/Field.styled';
 
 // Generator ids
@@ -26,7 +26,7 @@ export const Phonebook = () => {
   const contacts = useSelector(getContacts);
 
   // Add contacts
-  const handleAddContact = (e, name, number) => {
+  const handleOnSubmit = (e, name, number) => {
     e.preventDefault();
     const currentName = name;
     const currentNumber = number;
@@ -62,7 +62,7 @@ export const Phonebook = () => {
   };
 
   return (
-    <form onSubmit={e => handleAddContact(e, name, number)}>
+    <form onSubmit={e => handleOnSubmit(e, name, number)}>
       <div>
         <p>Name</p>
         <Field
